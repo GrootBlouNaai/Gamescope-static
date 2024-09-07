@@ -87,10 +87,13 @@ pkgver() {
 }
 
 build() {
-  arch-meson gamescope build \
-    -Dforce_fallback_for=glm,stb,libdisplay-info,libliftoff,vkroots,wlroots \
-    -Dpipewire=enabled
-  meson compile -C build
+    cd "$_pkgname"
+    arch-meson . build \
+        -Dforce_fallback_for=stb,wlroots,vkroots,libliftoff,glm,libdisplay-info \
+        -Dpipewire=enabled \
+        -Db_staticpic=true \
+        -Db_lto=true \
+    ninja -C build
 }
 
 package() {
